@@ -26,7 +26,7 @@ class InfoMessage:
 
 
 class Training:
-    """Базовый класс тренировки."""
+    """Базовый класс тренировки"""
 
     M_IN_KM: float = 1000   
     MINUTES_TO_HOURS: float = 60
