@@ -53,10 +53,17 @@ class Training:
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
+        InfoMessage(self.__class__.__name__,
+                    self.duration,
+                    self.get_distance(),
+                    self.get_mean_speed(),
+                    self.get_spent_calories())
+        return InfoMessage
 
 
 class Running(Training):
     """Тренировка: бег."""
+
     coeff_calorie_1 = 18
     coeff_calorie_2 = 20
 
@@ -101,6 +108,7 @@ class Swimming(Training):
                  weight: float,
                  length_pool: float,
                  count_pool: float) -> None:
+        super().__init__(action, duration, weight)
         self.length_pool = length_pool
         self.count_pool = count_pool
 
@@ -109,7 +117,7 @@ class Swimming(Training):
                 / self.M_IN_KM / self.MINUTES_TO_HOURS)
 
     def get_spent_calories(self):
-        return (self.get_mean_speed + self.coeff_calorie_1
+        return (self.get_mean_speed() + self.coeff_calorie_1
                 * self.MULTIPLY_TWO * self.weight)
 
 
@@ -119,8 +127,7 @@ def read_package(workout_type: str, data: list) -> Training:
     database: Dict[str, Type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
-        'WLK': SportsWalking
-                                          }
+        'WLK': SportsWalking}
     return database[workout_type](*data)
 
 
